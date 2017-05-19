@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  margin: 0;
+}
+
+.main-banner {
+  height: 60px;
+  background-color: gainsboro;
+  border: 1px gainsboro;
+  position: relative;
+  text-align: right;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+ }
+
+.logo {
+  position: absolute;
+  bottom: 1px;
+  font-size: 20px;
+}
+
+
+.form_title {
+	margin-top: 40px;
+	font-size: 20px;
+}
+
+.search {
+	margin-top: 40px;
+  	font-size: 17px;
+}
+
+button {
+  width: 40px;
+  height: 45px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+ }
+
+button:hover {
+	cursor: pointer;
+}
+
+
+
+fieldset {
+  border: none;
+  position: absolute;
+  left: 80px;
+  top: 50px;
+}
+
+input {
+  width: 400px;
+  height: 30px;
+  /*margin-top: 20px;*/
+  padding: 25px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+button:hover {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  cursor: pointer;
+
+ }
+
+ .pages_search {
+  background-color: white;
+  height: 40px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 350px;
+  margin-top: 20px;
+  
+}
+
+.previous, .next {
+  text-decoration: none;
+  
+}
+
+.next {
+  position: relative;
+
+}
+
+.offer_link {
+  text-decoration: none;
+}
+
+p span {
+  color: grey;
+}
