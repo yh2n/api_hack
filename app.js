@@ -23,6 +23,8 @@ function getData(searchEntry, callback) {
 			//console.log(data);
 			var resourceUrl = data.results[0].resource_url;
 			getCredits(resourceUrl);
+			// var extraArtists = resourceUrl.extraartists;
+			// getIndividualRoles(extraArtists);
 			displaySearchData(data);
 		})
 		.fail(function(data) {
@@ -60,13 +62,36 @@ function getCredits(discogsMasterReleaseUrl) {
 		data: creditRequest
 	})
 	.done(function(data) {
-		console.log(data.tracklist)
+		//console.log(data)
+		for (let i = 0; i < data.tracklist.length; i++) {
+		console.log(data.tracklist[i].extraartists);
+		}
 	})
 	.fail(function(data) {
-		return //console.log(data.pagination)
+		return 
 	})
 }
 
+
+// function getIndividualRoles(title) {
+// 	var creditRequest = {
+// 		key: "bgZeLMbaTgrMJXHkppzG",
+// 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
+// 	}
+
+// 	$.ajax({
+// 		url: title,
+// 		type: "GET",
+// 		dataType: "json",
+// 		data: creditRequest
+// 	})
+// 	.done(function(data) {
+// 		console.log(data.extraartists)
+// 	})
+// 	.fail(function(data) {
+// 		return //console.log(data.pagination)
+// 	})
+// }
 
 function displaySearchData(data) {
 	if(data.results) {
