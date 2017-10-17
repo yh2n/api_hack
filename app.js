@@ -81,6 +81,7 @@ function displaySearchData(data) {
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
+	displayCredits();
 }
 
 function displayCredits(e) {
@@ -105,6 +106,5 @@ function submit() {
 $(function() {
 	$(".page-btn").hide();
 	submit();
-	displayCredits();
 });
 
