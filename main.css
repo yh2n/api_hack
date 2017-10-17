@@ -23,38 +23,28 @@ body {
   position: absolute;
   bottom: 1px;
   font-size: 20px;
+  text-align: center:
+  ;
 }
 
 
 .form_title {
-	margin-top: 40px;
+	margin-top: 20px;
 	font-size: 20px;
+  padding-left: 20px;
 }
 
 .search {
-	margin-top: 40px;
+	margin-top: 20px;
   	font-size: 17px;
 }
 
-button {
-  width: 40px;
-  height: 45px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
- }
-
-button:hover {
-	cursor: pointer;
-}
-
-
-
 fieldset {
-  border: none;
+  display: block;
   position: absolute;
   left: 80px;
-  top: 50px;
+  top: 100px; 
+  padding-bottom: 20px;
 }
 
 input {
@@ -66,16 +56,19 @@ input {
   border-radius: 5px;
 }
 
-button:hover {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  cursor: pointer;
+.output {
+  display: block;
+}
 
- }
-
+#thumbscontainer {
+  margin-top: 500px;
+  display: block;
+  width: 960px;
+  height: 150px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+ 
  .pages_search {
   background-color: white;
   height: 40px;
@@ -103,3 +96,8 @@ button:hover {
 p span {
   color: grey;
 }
+
+ul {
+	list-style: none;
+}
+

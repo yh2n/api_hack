@@ -2,26 +2,30 @@
 <html>
 
 <head>
-  <title>Music Credits Database</title>
-  <meta name="description" content="musicians, recording artists, sound engineers, producers" />
+  <title>Ghost Notes</title>
+  <meta name="description" content="Music credits database, musicians, recording artists, sound engineers, producers" />
   <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
 <body>
   <header>
     <nav class="main-banner">
-        <p class="logo">Liner notes</p>
+        <p class="logo">Ghost Notes</p>
     </nav>
   </header>
  
   <form class="search_bar">
-    <fieldset name="search_database"> <!-- </fieldset> Closing it changes my whole layout... -->
+    <fieldset name="search_database"> 
     	<p class="form_title">Search Database</p>
     	<label for="keywords"></label>
-    <input class="search" placeholder="song, album, artist..." type="text"/>
+      <input class="search" placeholder="song, album, artist..." type="text"/>
+    </fieldset>
   </form>
-
-  <ul class="js-search-results"></ul>
+	
+<div id="thumbscontainer">	
+ 		<ul class="js-search-results"></ul>
+</div>
+  <div class="page-btn"></div>
   
 
 
