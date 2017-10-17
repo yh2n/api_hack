@@ -84,13 +84,13 @@ function displaySearchData(data) {
 }
 
 function displayCredits(e) {
-	$("h3").on("click", function() {
+	$("h3").on("click", function(e) {
+		console.log(e);
 		e.preventDefault();
-		$("#thumbscontainer").addClass("hidden");
+		$(".js-search-results").hide();
 	});
 }
 
-displayCredits();
 
 function submit() {
 	$(".search_bar").submit(function(e) {
@@ -105,4 +105,6 @@ function submit() {
 $(function() {
 	$(".page-btn").hide();
 	submit();
+	displayCredits();
 });
+
