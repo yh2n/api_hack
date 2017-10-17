@@ -1,9 +1,9 @@
-var discogs = "https://api.discogs.com/oauth/request_token";
-var discogsBaseUrl = "https://api.discogs.com/database/search?";
+let discogs = "https://api.discogs.com/oauth/request_token";
+let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
 function getData(searchEntry, callback) {
 	$(".js-search-results").html("");
-	var request = {
+	let request = {
 		q: searchEntry,
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
@@ -21,10 +21,8 @@ function getData(searchEntry, callback) {
 			// results [] = list of results that match search criteria.
 			console.log(data.results[0].resource_url);
 			//console.log(data);
-			var resourceUrl = data.results[0].resource_url;
+			let resourceUrl = data.results[0].resource_url;
 			getCredits(resourceUrl);
-			// var extraArtists = resourceUrl.extraartists;
-			// getIndividualRoles(extraArtists);
 			displaySearchData(data);
 		})
 		.fail(function(data) {
@@ -34,11 +32,11 @@ function getData(searchEntry, callback) {
 
 
 function getOutput(item) {
-  var title = item.title;
-  var thumb = item.thumb;
-  var style = item.style;
+  let title = item.title;
+  let thumb = item.thumb;
+  let style = item.style;
 
-  var output = '<li class="output"><a href="#">' +
+  let output = '<li class="output"><a href="#">' +
   '<div class= "list-left">' +
   '<img src=" ' + thumb + ' ">' +
   '</div class="list-right">' +
@@ -49,8 +47,8 @@ function getOutput(item) {
 }
 
 function getCredits(discogsMasterReleaseUrl) {
-	//var discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
-	var creditRequest = {
+	//let discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
+	let creditRequest = {
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
 	}
@@ -73,30 +71,10 @@ function getCredits(discogsMasterReleaseUrl) {
 }
 
 
-// function getIndividualRoles(title) {
-// 	var creditRequest = {
-// 		key: "bgZeLMbaTgrMJXHkppzG",
-// 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
-// 	}
-
-// 	$.ajax({
-// 		url: title,
-// 		type: "GET",
-// 		dataType: "json",
-// 		data: creditRequest
-// 	})
-// 	.done(function(data) {
-// 		console.log(data.extraartists)
-// 	})
-// 	.fail(function(data) {
-// 		return //console.log(data.pagination)
-// 	})
-// }
-
 function displaySearchData(data) {
 	if(data.results) {
   		data.results.forEach(function(item) {
-	     	var output = getOutput(item);
+	     	let output = getOutput(item);
 	     	$(".js-search-results").append(output);
     	});
 	}
@@ -105,17 +83,26 @@ function displaySearchData(data) {
 	}
 }
 
+function displayCredits(e) {
+	$("h3").on("click", function() {
+		e.preventDefault();
+		$("#thumbscontainer").addClass("hidden");
+	});
+}
 
+displayCredits();
 
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
-		var query = $(".search").val();
+		let query = $(".search").val();
 		getData(query, displaySearchData);
+		$(".page-btn").show();
 	});
 
 }
 
 $(function() {
+	$(".page-btn").hide();
 	submit();
 });
