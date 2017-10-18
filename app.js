@@ -82,6 +82,7 @@ function displaySearchData(data) {
 		$(".js-search-results").append("No results matching search");
 	}
 	displayCredits();
+	$(".page-btn").hide();
 }
 
 function displayCredits(e) {
@@ -89,6 +90,7 @@ function displayCredits(e) {
 		console.log(e);
 		e.preventDefault();
 		$(".js-search-results").hide();
+		$(".single-results").append($(e.currentTarget).text());
 	});
 }
 
