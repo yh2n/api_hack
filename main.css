@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #F7E1C8;
+  background-color: #0D1215;
   font-family: 'Roboto', sans-serif;
   font-size: 17px;
   margin: 0;
@@ -87,7 +87,10 @@ h3 {
   border-radius: 5px;
   width: 350px;
   margin-top: 20px;
-  
+}
+
+.single-results {
+  margin-left: 70px;
 }
 
 .page-btn {

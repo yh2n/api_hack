@@ -70,6 +70,10 @@ function getCredits(discogsMasterReleaseUrl) {
 	})
 }
 
+// function displayIndividualRoles(getCredits) {
+// 	console.log()
+// }
+
 
 function displaySearchData(data) {
 	if(data.results) {
@@ -86,11 +90,11 @@ function displaySearchData(data) {
 }
 
 function displayCredits(e) {
-	$("h3").on("click", function(e) {
+	$("li").on("click", function(e) {
 		console.log(e);
 		e.preventDefault();
 		$(".js-search-results").hide();
-		$(".single-results").append($(e.currentTarget).text());
+		$(".single-results").append($(e.currentTarget));
 	});
 }
 
