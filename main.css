@@ -12,7 +12,7 @@ body {
 .main-banner {
   height: 60px;
   color: #83AECD;
-  background-color: #3A1C5D;
+  background-color: #161F3E;
   border: 1px gainsboro;
   position: relative;
   text-align: right;
@@ -76,9 +76,6 @@ input {
 h3 {
   color: #83AECD;
 }
-.hidden {
- display: none;
-}
  
  .pages_search {
   background-color: white;
@@ -90,7 +87,7 @@ h3 {
 }
 
 .single-results {
-  margin-left: 70px;
+  margin-left: 50px;
 }
 
 .page-btn {
