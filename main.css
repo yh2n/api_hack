@@ -3,7 +3,9 @@
 }
 
 body {
-  background-color: #0D1215;
+  background-color: #0d1215;
+  background-image: linear-gradient(205deg, #0d1215 2%, #161f3e 53%);
+  background-attachment: fixed;
   font-family: 'Roboto', sans-serif;
   font-size: 17px;
   margin: 0;
@@ -31,6 +33,7 @@ body {
 
 
 .form_title {
+  color: #83AECD;
 	margin-top: 20px;
 	font-size: 20px;
   padding-left: 20px;
@@ -116,4 +119,5 @@ p span {
 ul {
 	list-style: none;
 }
+
 

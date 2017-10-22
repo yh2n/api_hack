@@ -40,7 +40,7 @@ function getOutput(item) {
   '<div class= "list-left">' +
   '<img src=" ' + thumb + ' ">' +
   '</div class="list-right">' +
-  '<h3>' + title + '</h3>' +
+  '<h3>' + title + '</h3>' + 
   '</div>' +
   '</li>';
   return output;
