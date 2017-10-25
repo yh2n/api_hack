@@ -19,10 +19,12 @@ function getData(searchEntry, callback) {
 		})
 		.done(function(data) {
 			// results [] = list of results that match search criteria.
+			console.log(data);
 			console.log(data.results[0].resource_url);
-			//console.log(data);
-			let resourceUrl = data.results[0].resource_url;
-			getCredits(resourceUrl);
+			//console.log(data.results);
+			for(let i = 0; i < data.results.length; i++) {
+			let resourceUrl = data.results[i].resource_url;
+			getCredits(resourceUrl)};
 			displaySearchData(data);
 		})
 		.fail(function(data) {
@@ -35,8 +37,9 @@ function getOutput(item) {
   let title = item.title;
   let thumb = item.thumb;
   let style = item.style;
+  let counter
 
-  let output = '<li class="output"><a href="#">' +
+  let output = '<li class="output" id=counter><a href="#">' +
   '<div class= "list-left">' +
   '<img src=" ' + thumb + ' ">' +
   '</div class="list-right">' +
