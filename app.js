@@ -67,7 +67,7 @@ function getCredits(discogsMasterReleaseUrl) {
 			console.log(data.tracklist[i].extraartists);
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
-				console.log(`${extraartists[j].name}: ${extraartists[j].role}`)
+				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
 				$(".single-results").append(`${extraartists[j].name}: ${extraartists[j].role}`);
 			}
 			//getIndividualRoles(extraartists)
@@ -104,13 +104,11 @@ function displayCredits(li, item, data) {
 		console.log(item);
 		e.preventDefault();
 		$(".js-search-results").hide();
-		for(let i = 0; i < data.results.length; i++) {
-			let resourceUrl = data.results[i].resource_url;
-			console.log(resourceUrl);
-			getCredits(resourceUrl);
-			//displaySearchData(data);
-		};
-		$(".single-results").append(item.label);
+		li.show();
+		let resourceUrl = item.resource_url;
+		console.log(resourceUrl);
+		getCredits(resourceUrl);
+		displaySearchData(data);
 	});
 }
 
