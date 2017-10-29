@@ -23,7 +23,8 @@ function getData(searchEntry, callback) {
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
 			console.log(resourceUrl);
-			getCredits(resourceUrl)};
+			//getCredits(resourceUrl)
+		};
 			displaySearchData(data);
 		})
 		.fail(function(data) {
@@ -67,6 +68,7 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`)
+				$(".single-results").append(`${extraartists[j].name}: ${extraartists[j].role}`);
 			}
 			//getIndividualRoles(extraartists)
 		}
@@ -85,21 +87,30 @@ function displaySearchData(data) {
 	if(data.results) {
   		data.results.forEach(function(item) {
 	     	let output = getOutput(item);
-	     	$(".js-search-results").append(output);
+	     	let li = $(output);
+	     	displayCredits(li, item, data);
+	     	$(".js-search-results").append(li);
     	});
 	}
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
-	displayCredits();
+	//displayCredits();
 	$(".page-btn").hide();
 }
 
 function displayCredits(li, item, data) {
 	li.on("click", function(e) {
+		console.log(item);
 		e.preventDefault();
 		$(".js-search-results").hide();
-		//$(".single-results").append($(e.currentTarget));
+		for(let i = 0; i < data.results.length; i++) {
+			let resourceUrl = data.results[i].resource_url;
+			console.log(resourceUrl);
+			getCredits(resourceUrl);
+			//displaySearchData(data);
+		};
+		$(".single-results").append(item.label);
 	});
 }
 
