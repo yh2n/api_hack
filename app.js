@@ -8,6 +8,7 @@ function getData(searchEntry, callback) {
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
 		per_page: 10,
+		page: 1,
 		type: "master"
 		}
 
@@ -23,6 +24,8 @@ function getData(searchEntry, callback) {
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
 			console.log(resourceUrl);
+			let page = request.page;
+			console.log(page);
 			//getCredits(resourceUrl)
 		};
 			displaySearchData(data);
@@ -68,20 +71,14 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
-				$(".single-results").append(`${extraartists[j].name}: ${extraartists[j].role}`);
+				$(".album").append(`<li>${extraartists[j].name}: ${extraartists[j].role}</li>`);
 			}
-			//getIndividualRoles(extraartists)
 		}
 	})
 	.fail(function(data) {
 		return 
 	})
 }
-
-// function displayIndividualRoles(getCredits) {
-// 	console.log()
-// }
-
 
 function displaySearchData(data) {
 	if(data.results) {
@@ -95,30 +92,46 @@ function displaySearchData(data) {
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
-	//displayCredits();
-	$(".page-btn").hide();
-}
+	$(".page-btn").show();
+	//navigate(request);
+}	
 
 function displayCredits(li, item, data) {
 	li.on("click", function(e) {
 		console.log(item);
+		$(".lightbox").css("display", "block");
 		e.preventDefault();
-		$(".js-search-results").hide();
-		li.show();
 		let resourceUrl = item.resource_url;
 		console.log(resourceUrl);
 		getCredits(resourceUrl);
+		$(".album").append(`<li class="title">Album: ${item.title}</li>`);
+		$(".additional_info").append(
+			`<li class="single-results">Genre: <span>${item.genre}</span></li>` +
+			`<li class="single-results">Label: <span>${item.label}</span></li>` +
+			`<li class="single-results">Format: <span>${item.format}</span></li>` +
+			`<li class="single-results">Country: <span>${item.country}</span></li>` +
+			`<li class="single-results">Year: <span>${item.year}</span></li>` 
+			);
 		displaySearchData(data);
 	});
 }
 
+function navigate(info, getData) {
+	let page = info.page;
+	let state = {page : 1}
+	let count = state.page;
+	$(".page-btn").on("click", function(e) {
+		console.log(e);
+		count++;
+		console.log(count);
+	})
+}
 
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
 		getData(query, displaySearchData);
-		$(".page-btn").show();
 	});
 
 }
