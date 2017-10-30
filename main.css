@@ -46,8 +46,10 @@ body {
 }
 
 fieldset {
+  background-color: #0d1215;
+  background-image: linear-gradient(215deg, #0d1215 2%, #161f3e 70%);
   display: block;
-  position: absolute;
+  position: fixed;
   border: 1px solid #83AECD;
   border-radius: 4px;
   font-family: 'Monoton', sans-serif;
@@ -92,7 +94,7 @@ h3 {
 }
 
 .album, .additional_info {
-  margin-left: 50px;
+  margin-left: 100px;
 }
 
 .title {
@@ -141,9 +143,23 @@ ul {
 }
 
 .content {
-    background-color: #fefefe;
+    background-color: rgba(143,178,203,0.3);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    /*float: right;*/
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #151B36;
+    text-decoration: none;
+    cursor: pointer;
 }

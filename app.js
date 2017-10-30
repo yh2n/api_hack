@@ -99,6 +99,7 @@ function displaySearchData(data) {
 function displayCredits(li, item, data) {
 	li.on("click", function(e) {
 		console.log(item);
+		$(".search_bar").hide();
 		$(".lightbox").css("display", "block");
 		e.preventDefault();
 		let resourceUrl = item.resource_url;
@@ -113,6 +114,10 @@ function displayCredits(li, item, data) {
 			`<li class="single-results">Year: <span>${item.year}</span></li>` 
 			);
 		displaySearchData(data);
+	});
+	$("span").on("click", function(e) {
+		$(".lightbox").css("display", "none");	
+		$(".search_bar").show();
 	});
 }
 
