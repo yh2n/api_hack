@@ -1,20 +1,20 @@
 let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
-function getData(searchEntry, callback) {
+function getData(searchEntry, callback, pageNumber) {
 	$(".js-search-results").html("");
 	let request = {
 		q: searchEntry,
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
 		per_page: 10,
-		page: 1,
+		page: pageNumber,
 		type: "master"
 		}
 
 	$.ajax({
 		url: discogsBaseUrl,
-		type: "GET",
+		type: "GET"
 		dataType: "json",
 		data: request,
 		})
@@ -71,7 +71,7 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
-				$(".album").append(`<li>${extraartists[j].name}: ${extraartists[j].role}</li>`);
+				$(".album").append(`<li>${extraartists[j].name}: <span class="recording-info">${extraartists[j].role}</span></li>`);
 			}
 		}
 	})
@@ -93,7 +93,7 @@ function displaySearchData(data) {
 		$(".js-search-results").append("No results matching search");
 	}
 	$(".page-btn").show();
-	//navigate(request);
+	//navigate(getData);
 }	
 
 function displayCredits(li, item, data) {
@@ -107,11 +107,11 @@ function displayCredits(li, item, data) {
 		getCredits(resourceUrl);
 		$(".album").append(`<li class="title">Album: ${item.title}</li>`);
 		$(".additional_info").append(
-			`<li class="single-results">Genre: <span>${item.genre}</span></li>` +
-			`<li class="single-results">Label: <span>${item.label}</span></li>` +
-			`<li class="single-results">Format: <span>${item.format}</span></li>` +
-			`<li class="single-results">Country: <span>${item.country}</span></li>` +
-			`<li class="single-results">Year: <span>${item.year}</span></li>` 
+			`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
+			`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
+			`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
+			`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
+			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` 
 			);
 		displaySearchData(data);
 	});
@@ -119,16 +119,21 @@ function displayCredits(li, item, data) {
 		$(".lightbox").css("display", "none");	
 		$(".search_bar").show();
 	});
+	$(window).on("click", function(e) {
+		if(e.currentTarget == $(".lightbox")) {
+		$(".lightbox").css("display", "none");	
+		$(".search_bar").show();
+		}
+	});
 }
 
-function navigate(info, getData) {
-	let page = info.page;
-	let state = {page : 1}
-	let count = state.page;
+function navigate(getData, pageNumber) {
+	let state= {pageNumber: 1};
+	pageNumber = state.pageNumber;
 	$(".page-btn").on("click", function(e) {
 		console.log(e);
-		count++;
-		console.log(count);
+		pageNumber++;
+		console.log(pageNumber);
 	})
 }
 
@@ -136,7 +141,7 @@ function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
-		getData(query, displaySearchData);
+		getData(query, displaySearchData, navigate);
 	});
 
 }
