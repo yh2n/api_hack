@@ -36,8 +36,6 @@ function getData(searchEntry, callback) {
 function getOutput(item) {
   let title = item.title;
   let thumb = item.thumb;
-  let style = item.style;
-  let counter
 
   let output = '<li class="output" id=counter><a href="#">' +
   '<div class= "list-left">' +
@@ -66,16 +64,15 @@ function getCredits(discogsMasterReleaseUrl) {
 		//console.log(data)
 		for (let i = 0; i < data.tracklist.length; i++) {
 		console.log(data.tracklist[i].extraartists);
+		let extraartists = data.tracklist[i].extraartists
+		displayCredits(extraartists);
+		$(".page-btn").hide();
 		}
 	})
 	.fail(function(data) {
 		return 
 	})
 }
-
-// function displayIndividualRoles(getCredits) {
-// 	console.log()
-// }
 
 
 function displaySearchData(data) {
@@ -88,17 +85,15 @@ function displaySearchData(data) {
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
-	displayCredits();
-	$(".page-btn").hide();
 }
 
-function displayCredits(e) {
-	$("li").on("click", function(e) {
-		console.log(e);
-		e.preventDefault();
-		$(".js-search-results").hide();
-		$(".single-results").append($(e.currentTarget));
-	});
+function displayCredits(data) {
+		//lightbox w/ results
+		let individualCredits = data.map(function(extraArtistsData) {
+			return {"name": extraArtistsData.name,
+					"role": extraArtistsData.role
+			}
+		})
 }
 
 
