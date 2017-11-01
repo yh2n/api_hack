@@ -71,18 +71,33 @@ input {
 input:focus {
   outline: none;
 }
-.output {
-  display: block;
-}
 
 /*SEARCH RESULTS*/
 #thumbscontainer {
   margin-top: 350px;
-  display: block;
-  max-width: 600px;
-  height: 150px;
+  height: 250px;
   margin-left: 50px;
   margin-right: 50px;
+/*  border: solid black;
+*/}
+
+ul {
+  list-style: none;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.js-search-results {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.output {
+  padding: 30px;
+  width: 20%;
+  list-style: none;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 h3 {
@@ -105,6 +120,7 @@ h3 {
   font-size: 17px;
   border: none;
   padding: 10px;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .page-btn::hover {
@@ -116,18 +132,10 @@ h3 {
 
 }
 
-.offer_link {
-  text-decoration: none;
-}
-
 p span {
   color: grey;
 }
 
-ul {
-	list-style: none;
-  font-family: 'Ubuntu', sans-serif;
-}
 
 
 /*LIGHTBOX*/

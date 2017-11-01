@@ -126,12 +126,14 @@ function displayCredits(li, item, data) {
 
 
 function navigate(pageNumber) {
+	//initial state
 	let state= {pageNumber: 1};
 	pageNumber = state.pageNumber;
 	$(".next").on("click", function(e) {
 		console.log(e);
 		let query = $(".search").val();
 		pageNumber++;
+		//makes another API request w/ pageNumber as argument
 		getData(query, displaySearchData, pageNumber);
 		if (pageNumber > 1) {
 			$(".prev").show();
