@@ -24,8 +24,6 @@ function getData(searchEntry, callback, pageNumber) {
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
 			console.log(resourceUrl);
-			let page = request.page;
-			console.log(page);
 			//getCredits(resourceUrl)
 		};
 			displaySearchData(data);
@@ -91,8 +89,7 @@ function displaySearchData(data) {
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
-	$(".page-btn").show();
-	//navigate(getData);
+	$(".next").show();
 }	
 
 function displayCredits(li, item, data) {
@@ -106,6 +103,7 @@ function displayCredits(li, item, data) {
 		getCredits(resourceUrl);
 		$(".album").append(`<li class="title">Album: ${item.title}</li>`);
 		$(".additional_info").append(
+			`<img class="lightbox_thumb" src=${item.thumb}></img>` +
 			`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
 			`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
 			`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
@@ -126,33 +124,27 @@ function displayCredits(li, item, data) {
 	});
 }
 
-// function navigate(getData) {
-// 	let state= {pageNumber: 1};
-// 	pageNumber = getData.request.page;
-// 	$(".page-btn").on("click", function(e) {
-// 		console.log(e);
-// 		pageNumber++;
-// 		console.log(pageNumber);
-// 	})
-// }
 
 function navigate(pageNumber) {
 	let state= {pageNumber: 1};
 	pageNumber = state.pageNumber;
-	$(".page-btn").on("click", function(e) {
+	$(".next").on("click", function(e) {
 		console.log(e);
-		pageNumber++;
-		console.log(pageNumber);
 		let query = $(".search").val();
+		pageNumber++;
 		getData(query, displaySearchData, pageNumber);
-	})
+		if (pageNumber > 1) {
+			$(".prev").show();
+		};
+		console.log(pageNumber);
+	});
 }
 
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
-		getData(query,displaySearchData, navigate);
+		getData(query, displaySearchData, navigate);
 	});
 
 }

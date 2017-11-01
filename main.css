@@ -33,6 +33,7 @@ body {
 }
 
 
+/*FORM*/
 .form_title {
   color: #83AECD;
   margin-top: 20px;
@@ -74,10 +75,11 @@ input:focus {
   display: block;
 }
 
+/*SEARCH RESULTS*/
 #thumbscontainer {
   margin-top: 350px;
   display: block;
-  width: 960px;
+  max-width: 600px;
   height: 150px;
   margin-left: 50px;
   margin-right: 50px;
@@ -87,15 +89,6 @@ h3 {
   color: #83AECD;
 }
  
- .pages_search {
-  background-color: white;
-  height: 40px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  width: 350px;
-  margin-top: 20px;
-}
-
 .album, .additional_info {
   margin-left: 100px;
 }
@@ -105,9 +98,13 @@ h3 {
 }
 
 .page-btn {
+  background: none;
+  color: #83AECD;
   margin-left: 50px;
   width: 100px;
   font-size: 17px;
+  border: none;
+  padding: 10px;
 }
 
 .page-btn::hover {
@@ -132,6 +129,8 @@ ul {
   font-family: 'Ubuntu', sans-serif;
 }
 
+
+/*LIGHTBOX*/
 .lightbox {
     display: none; 
     position: fixed; 
@@ -142,7 +141,7 @@ ul {
     height: 100%; 
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.9); 
 }
 
 .content {
@@ -153,6 +152,9 @@ ul {
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
+.lightbox_thumb {
+  float: right;
+}
 .close {
     color: #aaa;
     /*float: right;*/
@@ -174,3 +176,4 @@ ul {
 .title {
   font-size: 23px;
 }
+
