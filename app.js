@@ -138,6 +138,15 @@ function navigate(pageNumber) {
 		};
 		console.log(pageNumber);
 	});
+	$(".prev").on("click", function(e) {
+		let query = $(".search").val();
+		pageNumber--;
+		getData(query, displaySearchData, pageNumber);
+		console.log(pageNumber);
+		if (pageNumber < 2) {
+			$(".prev").hide();
+		};
+	})
 }
 
 function submit() {
