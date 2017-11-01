@@ -7,7 +7,7 @@ function getData(searchEntry, callback, pageNumber) {
 		q: searchEntry,
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
-		per_page: 10,
+		per_page: 15,
 		page: pageNumber,
 		type: "master"
 		}
@@ -68,7 +68,7 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
-				$(".album").append(`<li>${extraartists[j].name}: <span class="recording-info">${extraartists[j].role}</span></li>`);
+				$(".album").append(`<li>${extraartists[j].role}: <span class="recording-info">${extraartists[j].name}</span></li>`);
 			}
 		}
 	})
@@ -108,7 +108,8 @@ function displayCredits(li, item, data) {
 			`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
 			`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
 			`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
-			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` 
+			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` +
+			`<li class="single-results">Year: <span class="recording-info">${item.release_title}</span></li>` 
 			);
 		displaySearchData(data);
 	});
