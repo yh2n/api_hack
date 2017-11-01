@@ -1,13 +1,14 @@
 let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
-function getData(searchEntry, callback) {
+function getData(searchEntry, callback, pageNumber) {
 	$(".js-search-results").html("");
 	let request = {
 		q: searchEntry,
 		key: "bgZeLMbaTgrMJXHkppzG",
 		secret: "KdEBhprqXmmRUCiLugLfIUBWuxYGlDHW",
 		per_page: 10,
+		page: pageNumber,
 		type: "master"
 		}
 
@@ -20,11 +21,13 @@ function getData(searchEntry, callback) {
 		.done(function(data) {
 			// results [] = list of results that match search criteria.
 			console.log(data);
-			console.log(data.results[0].resource_url);
-			//console.log(data.results);
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
-			getCredits(resourceUrl)};
+			console.log(resourceUrl);
+			let page = request.page;
+			console.log(page);
+			//getCredits(resourceUrl)
+		};
 			displaySearchData(data);
 		})
 		.fail(function(data) {
@@ -32,12 +35,12 @@ function getData(searchEntry, callback) {
 	});
 };
 
-
 function getOutput(item) {
   let title = item.title;
   let thumb = item.thumb;
+  let style = item.style;
 
-  let output = '<li class="output" id=counter><a href="#">' +
+  let output = '<li class="output"><a href="#">' +
   '<div class= "list-left">' +
   '<img src=" ' + thumb + ' ">' +
   '</div class="list-right">' +
@@ -63,10 +66,12 @@ function getCredits(discogsMasterReleaseUrl) {
 	.done(function(data) {
 		//console.log(data)
 		for (let i = 0; i < data.tracklist.length; i++) {
-		console.log(data.tracklist[i].extraartists);
-		let extraartists = data.tracklist[i].extraartists
-		displayCredits(extraartists);
-		$(".page-btn").hide();
+			console.log(data.tracklist[i].extraartists);
+			let extraartists = data.tracklist[i].extraartists;
+			for (let j = 0; j < extraartists.length; j++) {
+				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
+				$(".album").append(`<li>${extraartists[j].name}: <span class="recording-info">${extraartists[j].role}</span></li>`);
+			}
 		}
 	})
 	.fail(function(data) {
@@ -74,35 +79,80 @@ function getCredits(discogsMasterReleaseUrl) {
 	})
 }
 
-
 function displaySearchData(data) {
 	if(data.results) {
   		data.results.forEach(function(item) {
 	     	let output = getOutput(item);
-	     	$(".js-search-results").append(output);
+	     	let li = $(output);
+	     	displayCredits(li, item, data);
+	     	$(".js-search-results").append(li);
     	});
 	}
 	else if (data.results === []){
 		$(".js-search-results").append("No results matching search");
 	}
+	$(".page-btn").show();
+	//navigate(getData);
+}	
+
+function displayCredits(li, item, data) {
+	li.on("click", function(e) {
+		console.log(item);
+		$(".search_bar").hide();
+		$(".lightbox").css("display", "block");
+		e.preventDefault();
+		let resourceUrl = item.resource_url;
+		console.log(resourceUrl);
+		getCredits(resourceUrl);
+		$(".album").append(`<li class="title">Album: ${item.title}</li>`);
+		$(".additional_info").append(
+			`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
+			`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
+			`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
+			`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
+			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` 
+			);
+		displaySearchData(data);
+	});
+	$("span").on("click", function(e) {
+		$(".lightbox").css("display", "none");	
+		$(".search_bar").show();
+	});
+	$(window).on("click", function(e) {
+		if(e.currentTarget == $(".lightbox")) {
+		$(".lightbox").css("display", "none");	
+		$(".search_bar").show();
+		}
+	});
 }
 
-function displayCredits(data) {
-		//lightbox w/ results
-		let individualCredits = data.map(function(extraArtistsData) {
-			return {"name": extraArtistsData.name,
-					"role": extraArtistsData.role
-			}
-		})
-}
+// function navigate(getData) {
+// 	let state= {pageNumber: 1};
+// 	pageNumber = getData.request.page;
+// 	$(".page-btn").on("click", function(e) {
+// 		console.log(e);
+// 		pageNumber++;
+// 		console.log(pageNumber);
+// 	})
+// }
 
+function navigate(pageNumber) {
+	let state= {pageNumber: 1};
+	pageNumber = state.pageNumber;
+	$(".page-btn").on("click", function(e) {
+		console.log(e);
+		pageNumber++;
+		console.log(pageNumber);
+		let query = $(".search").val();
+		getData(query, displaySearchData, pageNumber);
+	})
+}
 
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
-		getData(query, displaySearchData);
-		$(".page-btn").show();
+		getData(query,displaySearchData, navigate);
 	});
 
 }
