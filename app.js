@@ -39,11 +39,11 @@ function getOutput(item) {
   let style = item.style;
 
   let output = '<li class="output"><a href="#">' +
-  '<div class= "list-left">' +
+  '<div>' +
   '<img src=" ' + thumb + ' ">' +
-  '</div class="list-right">' +
-  '<h3>' + title + '</h3>' + 
   '</div>' +
+  '<h3>' + title + '</h3>' + 
+  '</div>' + '</a>' +
   '</li>';
   return output;
 }
@@ -93,7 +93,7 @@ function displaySearchData(data) {
 }	
 
 function displayCredits(li, item, data) {
-	li.on("click", function(e) {
+	li.find("a").on("click", function(e) {
 		console.log(item);
 		$(".search_bar").hide();
 		$(".lightbox").css("display", "block");
@@ -111,7 +111,7 @@ function displayCredits(li, item, data) {
 			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` +
 			`<li class="single-results">Year: <span class="recording-info">${item.release_title}</span></li>` 
 			);
-		displaySearchData(data);
+		//displaySearchData(data);
 	});
 	$("span").on("click", function(e) {
 		$(".lightbox").css("display", "none");	
