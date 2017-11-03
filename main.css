@@ -104,9 +104,6 @@ h3 {
   color: #83AECD;
 }
  
-.album, .additional_info {
-  margin-left: 100px;
-}
 
 .title {
   margin-bottom: 8px;
@@ -161,6 +158,10 @@ p span {
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.individual_credits, .additional_info {
+  margin-left: 100px;
 }
 
 .lightbox_thumb {

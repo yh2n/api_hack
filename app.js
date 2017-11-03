@@ -2,6 +2,7 @@ let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
 function getData(searchEntry, callback, pageNumber) {
+	console.log("pageNumber", pageNumber);
 	$(".js-search-results").html("");
 	let request = {
 		q: searchEntry,
@@ -48,6 +49,8 @@ function getOutput(item) {
   return output;
 }
 
+// GETS THE "EXTRAARTIST" OBJECT
+// CALLED WITHIN  displayCredits
 function getCredits(discogsMasterReleaseUrl) {
 	//let discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
 	let creditRequest = {
@@ -68,7 +71,7 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
-				$(".album").append(`<li>${extraartists[j].role}: <span class="recording-info">${extraartists[j].name}</span></li>`);
+				$(".individual_credits").append(`<li>${extraartists[j].role}: <span class="recording-info">${extraartists[j].name}</span></li>`);
 			}
 		}
 	})
@@ -92,7 +95,19 @@ function displaySearchData(data) {
 	$(".next").show();
 }	
 
+function getAdditionalInfo(item)  {
+	let additionalInfo = 
+	`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
+	`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
+	`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
+	`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
+	`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` +
+	`<img class="lightbox_thumb" src=${item.thumb}></img>` ;
+	return additionalInfo
+}
+
 function displayCredits(li, item, data) {
+	let additionalInfo = getAdditionalInfo(item);
 	li.find("a").on("click", function(e) {
 		console.log(item);
 		$(".search_bar").hide();
@@ -101,21 +116,13 @@ function displayCredits(li, item, data) {
 		let resourceUrl = item.resource_url;
 		console.log(resourceUrl);
 		getCredits(resourceUrl);
-		$(".album").append(`<li class="title">Album: ${item.title}</li>`);
-		$(".additional_info").append(
-			`<img class="lightbox_thumb" src=${item.thumb}></img>` +
-			`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
-			`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
-			`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
-			`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
-			`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` +
-			`<li class="single-results">Year: <span class="recording-info">${item.release_title}</span></li>` 
-			);
-		//displaySearchData(data);
+		$(".additional_info").append(additionalInfo);
 	});
 	$("span").on("click", function(e) {
-		$(".lightbox").css("display", "none");	
 		$(".search_bar").show();
+		$(".lightbox").css("display", "none");
+		$(".additional_info").empty();
+		$(".individual_credits").empty();
 	});
 	$(window).on("click", function(e) {
 		if(e.currentTarget == $(".lightbox")) {
@@ -127,15 +134,16 @@ function displayCredits(li, item, data) {
 
 
 function navigate(pageNumber) {
-	//initial state
-	let state= {pageNumber: 1};
-	pageNumber = state.pageNumber;
+	pageNumber = 1;
 	$(".next").on("click", function(e) {
 		console.log(e);
 		let query = $(".search").val();
+		query = sessionStorage.getItem("search");
+		console.log(query, "query");
 		pageNumber++;
-		//makes another API request w/ pageNumber as argument
+		//MAKES ANOTHER API REQUEST W/ pageNumber AS ARGUMENT
 		getData(query, displaySearchData, pageNumber);
+	     $(".js-search-results").empty();
 		if (pageNumber > 1) {
 			$(".prev").show();
 		};
@@ -156,7 +164,9 @@ function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
+		sessionStorage.setItem("search", query);
 		getData(query, displaySearchData, navigate);
+		$(".search").val("");
 	});
 
 }
