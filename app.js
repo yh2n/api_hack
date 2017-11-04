@@ -15,7 +15,7 @@ function getData(searchEntry, callback, pageNumber) {
 		page: pageNumber,
 		type: "master"
 		}
-
+console.log(request.per_page);
 	$.ajax({
 		url: discogsBaseUrl,
 		type: "GET",
@@ -143,44 +143,41 @@ function displayCredits(li, item, data) {
 }
 
 // event listener attached to ".next" and ".prev" buttons
-//takes pageNumber as parameter and calls getData 
-function navigate(pageNumber) {
+// calls getData with pageNumber as parameter 
+$(".next").on("click", function(e) {
 	pageNumber = 1;
-	$(".next").on("click", function(e) {
-		console.log(e);
-		console.log(pageNumber);
-		let query = $(".search").val();
-		query = sessionStorage.getItem("search");
-		console.log(query, "query");
-		pageNumber++;
+	console.log(e);
+	console.log(pageNumber);
+	let query = $(".search").val();
+	query = sessionStorage.getItem("search");
+	console.log(query, "query");
+	pageNumber++;
 //makes another api request w/ pageNumber as argument
-		getData(query, displaySearchData, pageNumber);
-	     $(".js-search-results").empty();
-		if (pageNumber > 1) {
-			$(".prev").show();
-		};
-		console.log(pageNumber);
-	});
-	$(".prev").on("click", function(e) {
-		let query = $(".search").val();
-		query = sessionStorage.getItem("search");
-		pageNumber--;
-		getData(query, displaySearchData, pageNumber);
-		console.log(pageNumber);
-		if (pageNumber < 2) {
-			$(".prev").hide();
-		};
-	})
-}
+	getData(query, displaySearchData, pageNumber);
+     $(".js-search-results").empty();
+	if (pageNumber > 1) {
+		$(".prev").show();
+	};
+	console.log(pageNumber);
+});
+$(".prev").on("click", function(e) {
+	let query = $(".search").val();
+	query = sessionStorage.getItem("search");
+	pageNumber--;
+	getData(query, displaySearchData, pageNumber);
+	console.log(pageNumber);
+	if (pageNumber < 2) {
+		$(".prev").hide();
+	};
+})
 
-
-//submits client's query
+//submits client's query with pageNumber parameter set to 1
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
 		sessionStorage.setItem("search", query);
-		getData(query, displaySearchData, navigate);
+		getData(query, displaySearchData, 1);
 		$(".search").val("");
 	});
 
