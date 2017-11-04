@@ -144,8 +144,8 @@ function displayCredits(li, item, data) {
 
 // event listener attached to ".next" and ".prev" buttons
 // calls getData with pageNumber as parameter 
+pageNumber = 1;
 $(".next").on("click", function(e) {
-	pageNumber = 1;
 	console.log(e);
 	console.log(pageNumber);
 	let query = $(".search").val();
@@ -171,7 +171,8 @@ $(".prev").on("click", function(e) {
 	};
 })
 
-//submits client's query with pageNumber parameter set to 1
+
+//submits client's query with pageNumber paramater set to 1
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
