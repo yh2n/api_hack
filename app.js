@@ -1,6 +1,9 @@
 let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
+//initial call to API
+//passes the input value(query), displaySearchData and navigate functions
+//called within navigate and submit functions
 function getData(searchEntry, callback, pageNumber) {
 	console.log("pageNumber", pageNumber);
 	$(".js-search-results").html("");
@@ -34,6 +37,8 @@ function getData(searchEntry, callback, pageNumber) {
 	});
 };
 
+//	creates <li> template to be appended to ".search-results" class in
+// displaySearchData
 function getOutput(item) {
   let title = item.title;
   let thumb = item.thumb;
@@ -49,8 +54,8 @@ function getOutput(item) {
   return output;
 }
 
-// GETS THE "EXTRAARTIST" OBJECT
-// CALLED WITHIN  displayCredits
+//makes a second request to api and gets the "extrartist" object
+//called within displayCredits
 function getCredits(discogsMasterReleaseUrl) {
 	//let discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
 	let creditRequest = {
@@ -80,6 +85,8 @@ function getCredits(discogsMasterReleaseUrl) {
 	})
 }
 
+
+//appends and displays results of initial call to ".js-search-results" <ul>
 function displaySearchData(data) {
 	if(data.results) {
   		data.results.forEach(function(item) {
@@ -95,6 +102,7 @@ function displaySearchData(data) {
 	$(".next").show();
 }	
 
+//creates <li> template to be appended to ".additional_info" class in displayCredits function
 function getAdditionalInfo(item)  {
 	let additionalInfo = 
 	`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
@@ -106,6 +114,8 @@ function getAdditionalInfo(item)  {
 	return additionalInfo
 }
 
+//displays individual credits additional info in lightbox
+//calls getCredits
 function displayCredits(li, item, data) {
 	let additionalInfo = getAdditionalInfo(item);
 	li.find("a").on("click", function(e) {
@@ -132,16 +142,18 @@ function displayCredits(li, item, data) {
 	});
 }
 
-
+// event listener attached to ".next" and ".prev" buttons
+//takes pageNumber as parameter and calls getData 
 function navigate(pageNumber) {
 	pageNumber = 1;
 	$(".next").on("click", function(e) {
 		console.log(e);
+		console.log(pageNumber);
 		let query = $(".search").val();
 		query = sessionStorage.getItem("search");
 		console.log(query, "query");
 		pageNumber++;
-		//MAKES ANOTHER API REQUEST W/ pageNumber AS ARGUMENT
+//makes another api request w/ pageNumber as argument
 		getData(query, displaySearchData, pageNumber);
 	     $(".js-search-results").empty();
 		if (pageNumber > 1) {
@@ -151,6 +163,7 @@ function navigate(pageNumber) {
 	});
 	$(".prev").on("click", function(e) {
 		let query = $(".search").val();
+		query = sessionStorage.getItem("search");
 		pageNumber--;
 		getData(query, displaySearchData, pageNumber);
 		console.log(pageNumber);
@@ -160,6 +173,8 @@ function navigate(pageNumber) {
 	})
 }
 
+
+//submits client's query
 function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
@@ -171,6 +186,7 @@ function submit() {
 
 }
 
+//document ready
 $(function() {
 	$(".page-btn").hide();
 	submit();
