@@ -95,7 +95,8 @@ ul {
 
 .output {
   padding: 30px;
-  width: 20%;
+  /*width: 20%;*/
+  flex: 1;
   list-style: none;
   font-family: 'Ubuntu', sans-serif;
 }
@@ -153,6 +154,8 @@ p span {
 }
 
 .content {
+    display: flex;
+    flex: 1;
     background-color: rgba(143,178,203,0.4);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
