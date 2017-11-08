@@ -15,7 +15,7 @@ function getData(searchEntry, callback, pageNumber) {
 		page: pageNumber,
 		type: "master"
 		}
-console.log(request.per_page);
+	console.log(request.per_page);
 	$.ajax({
 		url: discogsBaseUrl,
 		type: "GET",
@@ -76,7 +76,14 @@ function getCredits(discogsMasterReleaseUrl) {
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].name}: ${extraartists[j].role}`);
-				$(".individual_credits").append(`<li>${extraartists[j].role}: <span class="recording-info">${extraartists[j].name}</span></li>`);
+				$(".individual_credits").append(
+					`<ul>` + 
+						`<li>${extraartists[j].role}: </li>` +
+					`</ul>` +
+					`<ul>` +
+						`<li class="recording-info">${extraartists[j].name}</li>` + 
+					`</ul>`
+				);
 			}
 		}
 	})
@@ -105,19 +112,33 @@ function displaySearchData(data) {
 //creates <li> template to be appended to ".additional_info" class in displayCredits function
 function getAdditionalInfo(item)  {
 	let additionalInfo = 
-	`<li class="single-results">Genre: <span class="recording-info">${item.genre}</span></li>` +
-	`<li class="single-results">Label: <span class="recording-info">${item.label}</span></li>` +
-	`<li class="single-results">Format: <span class="recording-info">${item.format}</span></li>` +
-	`<li class="single-results">Country: <span class="recording-info">${item.country}</span></li>` +
-	`<li class="single-results">Year: <span class="recording-info">${item.year}</span></li>` +
-	`<img class="lightbox_thumb" src=${item.thumb}></img>` ;
+		`<ul>` +
+			`<li class="single-results">Genre: </li>` +
+			`<li class="single-results">Label: </li>` + 
+			`<li class="single-results">Format: </li>` + 
+			`<li class="single-results">Country: </li>` + 
+			`<li class="single-results">Year: </li>` + 
+		`</ul>` +
+		`<ul>` +
+			`<li class="recording-info">${item.genre}</li>` +
+			`<li class="recording-info">${item.label}</li>` +
+			`<li class="recording-info">${item.format}</li>` +
+			`<li class="recording-info">${item.country}</li>` +
+			`<li class="recording-info">${item.year}</li>` +
+		`<ul>`;
 	return additionalInfo
+}
+
+function getThumb(item) {
+	let thumb = `<img class="lightbox_thumb" src=${item.thumb}></img>`
+	return thumb
 }
 
 //displays individual credits additional info in lightbox
 //calls getCredits
 function displayCredits(li, item, data) {
 	let additionalInfo = getAdditionalInfo(item);
+	let thumb = getThumb(item);
 	li.find("a").on("click", function(e) {
 		console.log(item);
 		$(".search_bar").hide();
@@ -126,13 +147,16 @@ function displayCredits(li, item, data) {
 		let resourceUrl = item.resource_url;
 		console.log(resourceUrl);
 		getCredits(resourceUrl);
+		$(".individual_credits").append(`<li class="title">Album: ${item.title}</li>`);
 		$(".additional_info").append(additionalInfo);
+		$(".thumb").append(thumb);
 	});
 	$("span").on("click", function(e) {
 		$(".search_bar").show();
 		$(".lightbox").css("display", "none");
 		$(".additional_info").empty();
 		$(".individual_credits").empty();
+		$(".thumb").empty();
 	});
 	$(window).on("click", function(e) {
 		if(e.currentTarget == $(".lightbox")) {

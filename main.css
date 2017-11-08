@@ -34,6 +34,9 @@ body {
 
 
 /*FORM*/
+.search_bar {
+  display: flex;
+}
 .form_title {
   color: #83AECD;
   margin-top: 20px;
@@ -49,7 +52,7 @@ body {
 fieldset {
   background-color: #0d1215;
   background-image: linear-gradient(215deg, #0d1215 2%, #161f3e 70%);
-  display: block;
+  display: flex;
   position: fixed;
   border: 1px solid #83AECD;
   border-radius: 4px;
@@ -62,6 +65,7 @@ fieldset {
 input {
   width: 400px;
   height: 30px;
+  flex: 2 1;
   /*margin-top: 20px;*/
   padding: 25px;
   border: 1px solid lightgrey;
@@ -154,25 +158,27 @@ p span {
 }
 
 .content {
-    display: flex;
-    flex: 1;
+    /* display: flex;
+    justify-content: space-between;
+    align-items: flex-start; */
+    /* flex: 1; */
     background-color: rgba(143,178,203,0.4);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
-
+ 
 .individual_credits, .additional_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-left: 100px;
+  margin-bottom: 15px;
 }
 
-.lightbox_thumb {
-  float: right;
-}
 .close {
     color: #aaa;
-    /*float: right;*/
     font-size: 28px;
     font-weight: bold;
 }
@@ -190,5 +196,7 @@ p span {
 
 .title {
   font-size: 23px;
+  margin-bottom: 20px;
 }
+
 
