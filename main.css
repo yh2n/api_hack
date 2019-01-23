@@ -171,9 +171,7 @@ p span {
  
 .individual_credits, .additional_info {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  margin-left: 100px;
   margin-bottom: 15px;
 }
 

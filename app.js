@@ -54,7 +54,7 @@ function getOutput(item) {
   return output;
 }
 
-//makes a second request to api and gets the "extrartist" object
+//makes a second request to api and gets the "extraartist" object
 //called within displayCredits
 function getCredits(discogsMasterReleaseUrl) {
 	//let discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
