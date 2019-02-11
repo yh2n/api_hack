@@ -112,20 +112,20 @@ function displaySearchData(data) {
 //creates <li> template to be appended to ".additional_info" class in displayCredits function
 function getAdditionalInfo(item)  {
 	let additionalInfo = 
-		`<ul>` +
+		
 			`<li class="single-results">Genre: </li>` +
 			`<li class="single-results">Label: </li>` + 
 			`<li class="single-results">Format: </li>` + 
 			`<li class="single-results">Country: </li>` + 
 			`<li class="single-results">Year: </li>` + 
-		`</ul>` +
-		`<ul>` +
+		
 			`<li class="recording-info">${item.genre}</li>` +
 			`<li class="recording-info">${item.label}</li>` +
 			`<li class="recording-info">${item.format}</li>` +
 			`<li class="recording-info">${item.country}</li>` +
 			`<li class="recording-info">${item.year}</li>` +
-		`<ul>`;
+			`<li class="recording-info"></li>` 
+		;
 	return additionalInfo
 }
 

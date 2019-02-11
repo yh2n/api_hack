@@ -158,18 +158,20 @@ p span {
 }
 
 .content {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: flex-start; */
-    /* flex: 1; */
     background-color: rgba(143,178,203,0.4);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
+
+.credits {
+  display: flex;
+
+}
  
 .individual_credits, .additional_info {
+  border: solid;
   display: flex;
   align-items: flex-start;
   margin-bottom: 15px;
@@ -189,6 +191,8 @@ p span {
 }
 
 .recording-info {
+  border: solid red;
+  display: flex;
   color: #0A1830;
 }
 
