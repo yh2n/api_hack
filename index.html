@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Sylent</title>
+    <meta name="description" content="Liner notes, music credits database, musicians, recording artists, sound engineers, producers, label, publishing" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
 
-<head>
-  <title>Sylent</title>
-  <meta name="description" content="Liner notes, music credits database, musicians, recording artists, sound engineers, producers, label, publishing" />
-  <link rel="stylesheet" type="text/css" href="main.css">
-</head>
-
-<body>
-  <header>
-    <nav class="main-banner">
-        <p class="logo">Sylent</p>
-    </nav>
-  </header>
- 
-  <form class="search_bar">
-    <fieldset name="search_database"> 
-    	<p class="form_title">Search Liner Notes</p>
-    	<label for="keywords"></label>
-      <input class="search" placeholder="Enter song and artist name" type="text"/>
-    </fieldset>
-  </form>
-	
-<div id="thumbscontainer">	
- 		<ul class="js-search-results"></ul>
-    <div class="lightbox">
-      <div class="content">
-        <span class="close">&times;</span>
-        <ul class="credits"> 
-          <li class="individual_credits"></li>
-          <li class="thumb"></li>
-          <li class="additional_info"></li>
-        </ul>
-      </div>
+  <body>
+    <header>
+      <nav class="main-banner">
+          <p class="logo">Sylent</p>
+      </nav>
+    </header>
+  
+    <form class="search_bar">
+      <fieldset name="search_database"> 
+        <p class="form_title">Search Liner Notes</p>
+        <label for="keywords"></label>
+        <input class="search" placeholder="Song, album, artist name" type="text"/>
+      </fieldset>
+    </form>
+    
+    <div id="thumbscontainer">	
+        <ul class="js-search-results"></ul>
+        <div class="lightbox">
+          <div class="content">
+            <span class="close">&times;</span>
+            <ul class="credits"> 
+              <li class="individual_credits"></li>
+              <li class="thumb"></li>
+              <li class="additional_info"></li>
+            </ul>
+          </div>
+        </div>
+        <input type="button" value="Prev" class="page-btn prev"></input>
+        <input type="button" value="Next" class="page-btn next"></input>
     </div>
-    <input type="button" value="Prev" class="page-btn prev"></input>
-    <input type="button" value="Next" class="page-btn next"></input>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="app.js"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
