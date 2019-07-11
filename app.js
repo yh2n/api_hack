@@ -1,7 +1,7 @@
 let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
 
-		//INITIAL CALL API
+		//INITIAL CALL TO API
 		//passes the input value(query), displaySearchData and navigate functions
 		//called within navigate and submit functions
 function getData(searchEntry, callback, pageNumber) {
@@ -28,7 +28,6 @@ function getData(searchEntry, callback, pageNumber) {
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
 			console.log(resourceUrl);
-			//getCredits(resourceUrl)
 		};
 			displaySearchData(data);
 		})
@@ -36,36 +35,6 @@ function getData(searchEntry, callback, pageNumber) {
 			console.log(data.pagination)
 	});
 };
-
-		// EVENT LISTENER ATTACHED TO ".next" and ".prev" BUTTONS
-		// CALLS "getData" 
-let pageNumber = 1;
-
-$(".next").on("click", function(e) {
-	console.log(e);
-	console.log(pageNumber);
-	let query = $(".search").val();
-	query = sessionStorage.getItem("search");
-	console.log(query, ": query");
-	pageNumber++;
-	getData(query, displaySearchData, pageNumber);
-     $(".js-search-results").empty();
-	if (pageNumber > 1) {
-		$(".prev").show();
-	};
-	console.log(pageNumber);
-});
-
-$(".prev").on("click", function(e) {
-	let query = $(".search").val();
-	query = sessionStorage.getItem("search");
-	pageNumber--;
-	getData(query, displaySearchData, pageNumber);
-	console.log(pageNumber);
-	if (pageNumber < 2) {
-		$(".prev").hide();
-	};
-})
 
 
 		//SUBMITS USER'S QUERY WITH "pageNumber" SET TO 1
@@ -102,18 +71,48 @@ function getOutput(item) {
   let style = item.style;
 
   let output = '<li class="output"><a href="#">' +
-  '<div>' +
-  '<img src=" ' + thumb + ' ">' +
-  '</div>' +
-  '<h3>' + title + '</h3>' + 
-  '</div>' + '</a>' +
-  '</li>';
+	'<div>' +
+	'<img src=" ' + thumb + ' ">' +
+	'</div>' +
+	'<h3>' + title + '</h3>' + 
+	'</div>' + '</a>' +
+	'</li>';
   return output;
 }
 
+// EVENT LISTENER ATTACHED TO ".next" and ".prev" BUTTONS
+// CALLS "getData" 
+let pageNumber = 1;
+
+$(".next").on("click", function(e) {
+	console.log(e);
+	console.log(pageNumber);
+	let query = $(".search").val();
+	query = sessionStorage.getItem("search");
+	console.log(query, ": query");
+	pageNumber++;
+	getData(query, displaySearchData, pageNumber);
+		$(".js-search-results").empty();
+	if (pageNumber > 1) {
+		$(".prev").show();
+	};
+	console.log(pageNumber);
+});
+
+$(".prev").on("click", function(e) {
+	let query = $(".search").val();
+	query = sessionStorage.getItem("search");
+	pageNumber--;
+	getData(query, displaySearchData, pageNumber);
+	console.log(pageNumber);
+	if (pageNumber < 2) {
+		$(".prev").hide();
+	};
+})
 
 
-		//MAKES A SECOND REQUEST TO APU AND GETS  "extraartist" OBJECT
+
+		//MAKES A SECOND REQUEST TO API AND GETS  "extraartist" OBJECT
 		//INVOKED WITHIN displayCredits
 function getCredits(discogsMasterReleaseUrl) {
 		//let discogsMasterReleaseUrl = "https://api.discogs.com/masters/"
@@ -130,18 +129,20 @@ function getCredits(discogsMasterReleaseUrl) {
 	})
 	.done(function(data) {
 		console.log(data.tracklist);
+		console.log(data.tracklist[1].title);
 		for (let i = 0; i < data.tracklist.length; i++) {
 			console.log(data.tracklist[i].extraartists);
+			$(".individual_credits").append(
+					`<li>${data.tracklist[i].title}</li>` 
+			);
 			let extraartists = data.tracklist[i].extraartists;
 			for (let j = 0; j < extraartists.length; j++) {
 				console.log(`${extraartists[j].role}: ${extraartists[j].name}`);
 				$(".individual_credits").append(
 					`<ul>` + 
-						`<li>${extraartists[j].role}: </li>` +
-					`</ul>` +
-					`<ul>` +
-						`<li class="recording-info">${extraartists[j].name}</li>` + 
+						`<li>${extraartists[j].role}: ${extraartists[j].name}</li>` +
 					`</ul>`
+
 				);
 			}
 		}
@@ -164,9 +165,8 @@ function displayCredits(li, item, data) {
 		let resourceUrl = item.resource_url;
 		console.log(resourceUrl);
 		getCredits(resourceUrl);
-		$(".individual_credits").append(`<li class="title">Album: ${item.title}</li>`);
 		$(".additional_info").append(additionalInfo);
-		$(".thumb").append(thumb);
+		$(".thumb").append(thumb, item.title);
 	});
 	$("span").on("click", function(e) {
 		$(".search_bar").show();
@@ -176,9 +176,10 @@ function displayCredits(li, item, data) {
 		$(".thumb").empty();
 	});
 	$(window).on("click", function(e) {
-		if(e.currentTarget == $(".lightbox")) {
+		if(e.currentTarget === $(".lightbox")) {
 		$(".lightbox").css("display", "none");	
 		$(".search_bar").show();
+		console.log("closed")
 		}
 	});
 }
@@ -187,19 +188,11 @@ function displayCredits(li, item, data) {
 		//CREATES <li> TEMPLATE TO BE APPENDED TO ".additional_info" CLASS displayCredits FUNCTION
 function getAdditionalInfo(item)  {
 	let additionalInfo = 
-		
-			`<li class="single-results">Genre: </li>` +
-			`<li class="single-results">Label: </li>` + 
-			`<li class="single-results">Format: </li>` + 
-			`<li class="single-results">Country: </li>` + 
-			`<li class="single-results">Year: </li>` + 
-		
-			`<li class="recording-info">${item.genre}</li>` +
-			`<li class="recording-info">${item.label}</li>` +
-			`<li class="recording-info">${item.format}</li>` +
-			`<li class="recording-info">${item.country}</li>` +
-			`<li class="recording-info">${item.year}</li>` +
-			`<li class="recording-info"></li>` 
+			`<li class="single-results">Genre: ${item.genre}</li>` +
+			`<li class="single-results">Label: ${item.label}</li>` + 
+			`<li class="single-results">Format: ${item.format}</li>` + 
+			`<li class="single-results">Country: ${item.country}</li>` + 
+			`<li class="single-results">Year: ${item.year}</li>` 
 		;
 	return additionalInfo
 }
