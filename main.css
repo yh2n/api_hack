@@ -14,7 +14,9 @@ body {
 }
 
 .main-banner {
-  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   color: #83AECD;
   background-color: #161F3E;
@@ -22,16 +24,31 @@ body {
   font-family: 'Monoton', sans-serif;
   position: fixed;
   top: 0;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 10px;
+  padding: 15px;
  }
 
 .logo {
   font-size: 20px;
-  margin: 5px 5px 5px 20px;
+  flex: 1;
+  margin-left: 10px;
 }
 
+.search_query {
+  margin-right: 40px;
+  margin-top: -80px;
+  margin-bottom: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  transition: margin-top 2.5s;
+}
+
+.pagination {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 12px;
+}
+
+.result_message {
+  color: grey;
+}
 
 /*FORM*/
 .search_bar {
@@ -49,6 +66,10 @@ body {
     font-size: 17px;
 }
 
+.displayed {
+  margin-top: 0
+}
+
 fieldset {
   background-color: #0d1215;
   background-image: linear-gradient(215deg, #0d1215 2%, #161f3e 70%);
@@ -59,6 +80,10 @@ fieldset {
   left: 80px;
   top: 100px; 
   padding-bottom: 20px;
+}
+
+.hidden {
+  display: none;
 }
 
 input {
@@ -80,10 +105,22 @@ input::placeholder {
 
 /*SEARCH RESULTS*/
 #thumbscontainer {
-  margin-top: 350px;
+  margin-top: 150px;
   height: 250px;
   margin-left: 50px;
   margin-right: 50px;
+}
+
+.thumb {
+  display: flex;
+}
+
+.lightbox_thumb {
+  margin-right: 20px;
+}
+
+.track, .single-results {
+  margin-top: 10px;
 }
 
 ul {
@@ -104,6 +141,12 @@ ul {
   font-family: 'Ubuntu', sans-serif;
 }
 
+img {
+  transition: all 1.5s;
+}
+img:hover {
+  transform: scale(1.1)
+}
 h3 {
   color: #83AECD;
 }
@@ -161,31 +204,33 @@ p span {
 
 .content {
     display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(143,178,203,0.4);
     margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
+    border: .5px solid #888;
+    border-radius: 4px;
     width: 80%; 
 }
 
 .credits {
   display: flex;
   flex-direction: column;
+  width: 95%;
+  padding: 0
 }
- 
+
 .individual_credits, .additional_info {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   border: solid;
+  margin-top: 15px;
   margin-bottom: 15px;
-  border: solid green;
-}
-
-.close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
+  border: solid .5px #888;;
+  border-radius: 4px;
+  padding: 10px 15px; 
 }
 
 .close:hover,
@@ -195,15 +240,16 @@ p span {
     cursor: pointer;
 }
 
-.recording-info {
-  /* display: flex; */
-  border: solid red;
-  color: #0A1830;
-}
-
 .title {
   font-size: 23px;
   margin-bottom: 20px;
+}
+
+.reset {
+  margin-right: 10px;
+}
+.reset:hover {
+  cursor: pointer;
 }
 
 

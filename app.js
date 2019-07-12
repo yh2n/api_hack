@@ -1,5 +1,6 @@
 let discogs = "https://api.discogs.com/oauth/request_token";
 let discogsBaseUrl = "https://api.discogs.com/database/search?";
+let totalPages;
 
 		//INITIAL CALL TO API
 		//passes the input value(query), displaySearchData and navigate functions
@@ -15,7 +16,6 @@ function getData(searchEntry, callback, pageNumber) {
 		page: pageNumber,
 		type: "master"
 		}
-	console.log(request.per_page);
 	$.ajax({
 		url: discogsBaseUrl,
 		type: "GET",
@@ -24,7 +24,15 @@ function getData(searchEntry, callback, pageNumber) {
 		})
 		.done(function(data) {
 			// results [] = list of results that match search criteria.
-			console.log(data);
+			console.log(data.pagination);
+			if(data.pagination.items === 0) {
+				$(".js-search-results").append(
+				`<p class="result_message">No results matching your search 		 critreria<br/>	
+				Check the spelling and try again<p/>`
+				);
+			}
+			totalPages = data.pagination.pages;
+			console.log(`++++++++++++++ ${totalPages}`)
 			for(let i = 0; i < data.results.length; i++) {
 			let resourceUrl = data.results[i].resource_url;
 			console.log(resourceUrl);
@@ -42,8 +50,12 @@ function submit() {
 	$(".search_bar").submit(function(e) {
 		e.preventDefault();
 		let query = $(".search").val();
+		let progress = `${totalPages}`
 		sessionStorage.setItem("search", query);
+		$("fieldset").addClass("hidden");
+		$(".reset").removeClass("hidden")
 		getData(query, displaySearchData, pageNumber);
+		$(".search_query").append(query).addClass("displayed");
 		$(".search").val("");
 	});
 }
@@ -51,17 +63,24 @@ function submit() {
 		//APPENDS AND DISPLAYS RESULTS OF INITIAL CALL TO ".js-search-results" <ul>
 function displaySearchData(data) {
 	if (data.results) {
+		$('.pagination').html(`${pageNumber}/${totalPages}`).addClass("displayed");
   		data.results.forEach(function(item) {
 			let output = getOutput(item);
 			let li = $(output);
 	     	displayCredits(li, item, data);
-	     	$(".js-search-results").append(li);
+			 $(".js-search-results").append(li);
+			if(pageNumber < totalPages) {
+				$(".next").show();
+			}
+			else {
+				$(".next").hide();
+			}
+			console.log(pageNumber, totalPages);
     	});
 	}
 	else if (data.results === []) {
 		$(".js-search-results").append("No results matching search");
 	}
-	$(".next").show();
 }	
 
 		//CREATES <li> TEMPLATE TO BE APPENDED TO ".js-search-results" class in displaySearchData
@@ -85,9 +104,7 @@ function getOutput(item) {
 let pageNumber = 1;
 
 $(".next").on("click", function(e) {
-	console.log(e);
-	console.log(pageNumber);
-	let query = $(".search").val();
+	let query = $(" .search").val();
 	query = sessionStorage.getItem("search");
 	console.log(query, ": query");
 	pageNumber++;
@@ -95,8 +112,11 @@ $(".next").on("click", function(e) {
 		$(".js-search-results").empty();
 	if (pageNumber > 1) {
 		$(".prev").show();
-	};
-	console.log(pageNumber);
+	}
+	else if(pageNumber = totalPages) {
+		$(".next").hide();
+	}
+	console.log(pageNumber, totalPages);
 });
 
 $(".prev").on("click", function(e) {
@@ -131,19 +151,21 @@ function getCredits(discogsMasterReleaseUrl) {
 		console.log(data.tracklist);
 		console.log(data.tracklist[1].title);
 		for (let i = 0; i < data.tracklist.length; i++) {
-			console.log(data.tracklist[i].extraartists);
 			$(".individual_credits").append(
-					`<li>${data.tracklist[i].title}</li>` 
-			);
-			let extraartists = data.tracklist[i].extraartists;
-			for (let j = 0; j < extraartists.length; j++) {
-				console.log(`${extraartists[j].role}: ${extraartists[j].name}`);
-				$(".individual_credits").append(
-					`<ul>` + 
-						`<li>${extraartists[j].role}: ${extraartists[j].name}</li>` +
-					`</ul>`
-
-				);
+				`<li class="track">${data.tracklist[i].title}</li>` 
+		);
+			if(data.tracklist[i].extraartists) {
+				console.log(data.tracklist[i].extraartists);
+				let extraartists = data.tracklist[i].extraartists;
+				for (let j = 0; j < extraartists.length; j++) {
+					console.log(`${extraartists[j].role}: ${extraartists[j].name}`);
+					$(".individual_credits").append(
+						`<ul>` + 
+							`<li>${extraartists[j].role}: ${extraartists[j].name}</li>` +
+						`</ul>`
+	
+					);
+				}
 			}
 		}
 	})
@@ -168,19 +190,12 @@ function displayCredits(li, item, data) {
 		$(".additional_info").append(additionalInfo);
 		$(".thumb").append(thumb, item.title);
 	});
-	$("span").on("click", function(e) {
+	$(".lightbox").on("click", function(e) {
 		$(".search_bar").show();
 		$(".lightbox").css("display", "none");
 		$(".additional_info").empty();
 		$(".individual_credits").empty();
 		$(".thumb").empty();
-	});
-	$(window).on("click", function(e) {
-		if(e.currentTarget === $(".lightbox")) {
-		$(".lightbox").css("display", "none");	
-		$(".search_bar").show();
-		console.log("closed")
-		}
 	});
 }
 
@@ -202,7 +217,9 @@ function getThumb(item) {
 	return thumb
 }
 
-
+$(".reset").on('click', function() {
+	window.location.reload()
+})
 
 
 $(function() {
