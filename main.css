@@ -213,9 +213,8 @@ p span {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(143, 178, 203, 0.4);
+    background-color: rgba(81, 15, 89, 0.4);
     margin: 15% auto;
-    border: 0.5px solid #888;
     border-radius: 4px;
     width: 80%;
 }
@@ -231,18 +230,32 @@ p span {
     padding: 0;
 }
 
+.credits .individual_credits {
+    list-style-type: decimal;
+}
+
+.credits .thumb {
+    color: white;
+    font-size: 20px;
+}
+
 .individual_credits,
 .additional_info {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border: solid;
+    color: white;
     margin-top: 15px;
     margin-bottom: 15px;
-    border: solid 0.5px #888;
-    border-radius: 4px;
+}
+
+.individual_credits {
     padding: 10px 15px;
+}
+
+additional_info {
+    padding: 10px 0;
 }
 
 .title {
