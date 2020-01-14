@@ -27,7 +27,7 @@ function getData(searchEntry, callback, pageNumber) {
             console.log(data.pagination);
             if (data.pagination.items === 0) {
                 $(".js-search-results").append(
-                    `<p class="result_message">No results matching your search 		 critreria<br/>	
+                    `<p class="result_message">No results matching your search criteria<br/>	
 				Check the spelling and try again<p/>`
                 );
             }
@@ -88,19 +88,18 @@ function getOutput(item) {
     let title = item.title;
     let thumb = item.thumb;
 
-    let output =
-        '<li class="output"><a href="#">' +
-        '<div class="thumb_container">' +
-        '<img src=" ' +
-        thumb +
-        ' ">' +
-        "</div>" +
-        "<h3>" +
-        title +
-        "</h3>" +
-        "</div>" +
-        "</a>" +
-        "</li>";
+    let output = `<li class="output"><a href="#">
+        <div class="thumb_container">
+        <img src="
+        ${thumb}
+         ">
+        </div>
+        <h3>
+        ${title}
+        </h3>
+        </div>
+        </a>
+        </li>`;
     return output;
 }
 
@@ -117,7 +116,7 @@ $(".next").on("click", function(e) {
     $(".js-search-results").empty();
     if (pageNumber > 1) {
         $(".prev").show();
-    } else if ((pageNumber = totalPages)) {
+    } else if (pageNumber === totalPages) {
         $(".next").hide();
     }
     console.log(pageNumber, totalPages);
@@ -164,11 +163,9 @@ function getCredits(discogsMasterReleaseUrl) {
                             `${extraartists[j].role}: ${extraartists[j].name}`
                         );
                         $(".individual_credits").append(
-                            `<ul>` +
-                                `<li>${extraartists[j].role}: ${
-                                    extraartists[j].name
-                                }</li>` +
-                                `</ul>`
+                            `<ul>
+                                <li>${extraartists[j].role}: ${extraartists[j].name}</li>
+                                </ul>`
                         );
                     }
                 }
@@ -204,23 +201,21 @@ function displayCredits(li, item, data) {
 
 //CREATES <li> TEMPLATE TO BE APPENDED TO ".additional_info" CLASS displayCredits FUNCTION
 function getAdditionalInfo(item) {
-    let additionalInfo =
-        `<li class="single-results">Genre: ${item.genre}</li>` +
-        `<li class="single-results">Label: ${item.label}</li>` +
-        `<li class="single-results">Format: ${item.format}</li>` +
-        `<li class="single-results">Country: ${item.country}</li>` +
-        `<li class="single-results">Year: ${item.year}</li>`;
+    let additionalInfo = `<li class="single-results">Genre: ${item.genre}</li>
+        <li class="single-results">Style: ${item.style}${""}</li>
+        <li class="single-results">Label: ${item.label}</li>
+        <li class="single-results">Format: ${item.format}</li>
+        <li class="single-results">Country: ${item.country}</li>
+        <li class="single-results">Year: ${item.year}</li>`;
     return additionalInfo;
 }
 
 function getThumb(item) {
-    let thumb = `<div class="lightbox_thumb_container"><img class="lightbox_thumb" src=${
-        item.thumb
-    }></img>`;
+    let thumb = `<div class="lightbox_thumb_container"><img class="lightbox_thumb" src=${item.thumb}></img>`;
     return thumb;
 }
 
-$(".reset").on("click", function() {
+$(".logo").on("click", function() {
     window.location.reload();
 });
 

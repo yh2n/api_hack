@@ -32,6 +32,9 @@ body {
     flex: 1;
     margin-left: 10px;
 }
+.logo:hover {
+    cursor: pointer;
+}
 
 .search_query {
     margin-right: 40px;
@@ -263,9 +266,6 @@ additional_info {
     margin-bottom: 20px;
 }
 
-.reset {
-    margin-right: 10px;
-}
-.reset:hover {
-    cursor: pointer;
+#text {
+    color: green;
 }
