@@ -6,7 +6,6 @@ let totalPages;
 //passes the input value(query), displaySearchData and navigate functions
 //called within navigate and submit functions
 function getData(searchEntry, callback, pageNumber) {
-    console.log("pageNumber", pageNumber);
     $(".js-search-results").html("");
     let request = {
         q: searchEntry,
@@ -24,12 +23,13 @@ function getData(searchEntry, callback, pageNumber) {
     })
         .done(function(data) {
             // results [] = list of results that match search criteria.
-            console.log(data.pagination);
             if (data.pagination.items === 0) {
                 $(".js-search-results").append(
-                    `<p class="result_message">No results matching your search criteria<br/>	
-				Check the spelling and try again<p/>`
+                    `<p class="result_message">No results matching your search criteria.<br/>	
+				Check the spelling and try again.<p/>`
                 );
+                $(".js-search-results").addClass("no-result-message");
+                return $(".search_query").addClass("no-results");
             }
             totalPages = data.pagination.pages;
             for (let i = 0; i < data.results.length; i++) {
@@ -76,10 +76,8 @@ function displaySearchData(data) {
             } else {
                 $(".next").hide();
             }
-            console.log(pageNumber, totalPages);
+            console.log(data.results.length);
         });
-    } else if (data.results === []) {
-        $(".js-search-results").append("No results matching search");
     }
 }
 
@@ -189,7 +187,8 @@ function displayCredits(li, item, data) {
         console.log(resourceUrl);
         getCredits(resourceUrl);
         $(".additional_info").append(additionalInfo);
-        $(".thumb").append(thumb, item.title);
+        let title = `<div class="lightbox_title">${item.title}<div>`;
+        $(".thumb").append(thumb, title);
     });
     $(".lightbox").on("click", function(e) {
         $(".lightbox").css("display", "none");

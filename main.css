@@ -44,6 +44,10 @@ body {
     transition: margin-top 2.5s;
 }
 
+.search_query.no-results {
+    color: grey;
+}
+
 .pagination {
     font-family: "Ubuntu", sans-serif;
     font-size: 12px;
@@ -133,6 +137,10 @@ ul {
     justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.js-search-results.no-result-message {
+    justify-content: center;
 }
 
 .output {
@@ -257,7 +265,7 @@ p span {
     padding: 10px 15px;
 }
 
-additional_info {
+.additional_info {
     padding: 10px 0;
 }
 
@@ -268,4 +276,14 @@ additional_info {
 
 #text {
     color: green;
+}
+
+@media all and (max-width: 650px) {
+    .thumb {
+        flex-direction: column;
+        align-items: center;
+    }
+    .lightbox_title {
+        margin-top: 25px;
+    }
 }
